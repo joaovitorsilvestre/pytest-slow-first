@@ -1,0 +1,10 @@
+site_name: pytest-slow-first
+site_description: Run first the slowest tests of previous run
+site_author: João Vitor Silvestre
+
+theme: readthedocs
+
+repo_url: https://github.com/joaovitorsilvestre/pytest-slow-first
+
+pages:
+- Home: index.md
