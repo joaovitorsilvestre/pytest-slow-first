@@ -21,7 +21,7 @@ setup(
     license='MIT',
     url='https://github.com/joaovitorsilvestre/pytest-slow-first',
     description='Run first the slowest tests of previous run',
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     py_modules=['pytest_slow_first'],
     python_requires='>=3.5',
     install_requires=['pytest>=3.5.0'],
