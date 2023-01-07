@@ -18,6 +18,8 @@ pytest-slow-first
 
 Allow to run your test suite with tests ordered by their duration on last successful run.
 
+</br>
+
 ## How it can make your suite run faster?
 
 Before all, these benefits only appear when running this plugin alongside with [pytest-xdist](https://github.com/pytest-dev/pytest-xdist).
@@ -35,13 +37,41 @@ The problem with this approath is that demanding tests very often will go to sam
 When this happens, the total time spend running your suit will be longer that necessary, because, as you can se in the above image,
 there are workers hanging without any more tests to run.
 
+This plugin will ensure that slowers tests run first and the total duration of the same suite will look like this:
+
 <img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title"  style="width: 60% !important;">
 
-Requirements
+### How it works?
+
+This plugin will save the duration of each of your tests (in a file, or wherever you want) to ensure that, in the next run, they will be 
+executed ordered by their durations.
+
+---
+
+# Usage
 ------------
 
-* TODO
+You just need to define two functions: one to save results (`slow_first_save_durations`) and 
+another to load results (`slow_first_load_durations`) inside `conftest.py` file. 
 
+The `slow_first_save_durations` function will be called at the end of suite with the data duration of your tests. While `slow_first_load_durations` will run before your suite starts and will order your tests based on their last duration times.
+
+Example of `conftest.py` file:
+
+```python
+import os
+import json
+
+def slow_first_save_durations(durations_data: str):
+    assert json.loads(durations_data)
+    with open('{file_to_save}', 'w') as f:
+        f.write(durations_data)
+
+def slow_first_load_durations():
+    if os.path.exists('{file_to_save}'):
+        with open('{file_to_save}', 'r') as f:
+            return f.read()
+```
 
 Installation
 ------------
