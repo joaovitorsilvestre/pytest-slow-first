@@ -19,7 +19,7 @@ Taking this into acount, now imagine a suite with 6 tests. Each one takes some a
 
 <img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="width: 60% !important;">
 
-By running this suite with Xdist with 2 workers, running tests at default order, the load of each worker will be like:
+By running this suite with Xdist with 2 workers, tests at default order, the load of each worker would be like:
 
 <img src="./docs/assets/only_xdist.png?raw=true" alt="Alt text" title="Optional title"  style="width: 70% !important;">
 
