@@ -21,13 +21,11 @@ Allow to run the
 Features
 --------
 
-![Alt text](./docs/assets/test_suite.png?raw=true "Title")
+<img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="max-width: 70%;">
 
-![Alt text](./docs/assets/only_xdist.png?raw=true "Title")
+<img src="./docs/assets/only_xdist.png?raw=true" alt="Alt text" title="Optional title" style="max-width: 70%;">
 
-![Alt text](./docs/assets/xdist_and_slow_first.pn?raw=true "Title")
-
-![plot](./docs/assets/xdist_and_slow_first.pn?raw=true)
+<img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title" style="max-width: 70%;">
 
 Requirements
 ------------
