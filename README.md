@@ -1,30 +1,21 @@
-=================
 pytest-slow-first
 =================
 
-.. image:: https://img.shields.io/pypi/v/pytest-slow-first.svg
-    :target: https://pypi.org/project/pytest-slow-first
-    :alt: PyPI version
-
-.. image:: https://img.shields.io/pypi/pyversions/pytest-slow-first.svg
-    :target: https://pypi.org/project/pytest-slow-first
-    :alt: Python versions
-
-.. image:: https://ci.appveyor.com/api/projects/status/github/joaovitorsilvestre/pytest-slow-first?branch=master
-    :target: https://ci.appveyor.com/project/joaovitorsilvestre/pytest-slow-first/branch/master
-    :alt: See Build Status on AppVeyor
+![Python versions](https://img.shields.io/pypi/v/pytest-slow-first.svg?raw=True)
+![Python versions](https://img.shields.io/pypi/pyversions/pytest-slow-first.svg?raw=True)
 
 ## What it does?
 
 Allow to run your test suite with tests ordered by their duration on last successful run.
 
 </br>
+</hr>
 
 ## How it can make your suite run faster?
 
 Before all, these benefits only appear when running this plugin alongside with [pytest-xdist](https://github.com/pytest-dev/pytest-xdist).
 
-Imagine a suit with 6 tests. Each one takes some amount of time to run. Ex:
+Taking this into acount, now imagine a suite with 6 tests. Each one takes some amount of time to run. Ex:
 
 <img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="width: 60% !important;">
 
@@ -43,86 +34,79 @@ This plugin will ensure that slowers tests run first and the total duration of t
 
 ### How it works?
 
-This plugin will save the duration of each of your tests (in a file, or wherever you want) to ensure that, in the next run, they will be 
-executed ordered by their durations.
+This plugin will save the duration of each of your tests in a file or wherever you want. 
+In the next time you run it, tests will be sorted by time spend in the last run, making your whole suite take less time to complete. 
 
----
+</br>
+</hr>
 
-# Usage
-------------
+Usage
+-----
 
-You just need to define two functions: one to save results (`slow_first_save_durations`) and 
-another to load results (`slow_first_load_durations`) inside `conftest.py` file. 
+You just need to define two functions inside your conftest.py file: `slow_first_save_durations` and `slow_first_load_durations`.
 
-The `slow_first_save_durations` function will be called at the end of suite with the data duration of your tests. While `slow_first_load_durations` will run before your suite starts and will order your tests based on their last duration times.
+The first one is to save results of current run and the second one is to load the same results in the folowing run. Allowing this plugin to sort execuntion of tests based in these results.
 
 Example of `conftest.py` file:
-
 ```python
-import os
-import json
+import os, json
 
-def slow_first_save_durations(durations_data: str):
-    assert json.loads(durations_data)
-    with open('{file_to_save}', 'w') as f:
-        f.write(durations_data)
 
 def slow_first_load_durations():
-    if os.path.exists('{file_to_save}'):
-        with open('{file_to_save}', 'r') as f:
+    if os.path.exists('/tmp/tests_duration'):
+        with open('/tmp/tests_duration', 'r') as f:
             return f.read()
+    else:
+        # Durations not found. Run with default order
+        return None
+
+def slow_first_save_durations(durations_data: str):
+    with open('/tmp/tests_duration', 'w') as f:
+        f.write(durations_data)
 ```
+
+#### Explanation
+
+1. First, `slow_first_load_durations` will be called before your tests starts running, it will load the durantion of the tests
+of the previous run. 
+
+    * **obs**: if its the first time using this plugin or if you can't load the results, this function must return None.
+
+2. If `slow_first_load_durations` finds data, it returns the content and slow-first plugin will sort your tests, otherwise 
+the test suite will run at default order.
+
+3. If the suit runs with success, `slow_first_save_durations` is going to be called with durations as argument. This function must save the results
+in a way that `slow_first_load_durations` can load in the next run.
+
+### Running with pytest-slow-first plugin
+Finally, activate the plugin by passing `--slow-first` as paramter of pytest command:
+
+```bash
+pytest tests --slow-first -n3  # using along side xdist
+```
+
+</br>
+</hr>
 
 Installation
 ------------
 
-You can install "pytest-slow-first" via `pip`_ from `PyPI`_::
+You can install "pytest-slow-first" via `pip`:
 
     $ pip install pytest-slow-first
 
-
-Usage
------
-```python
-import os
-import json
-
-def slow_first_save_durations(durations_data: str):
-    assert json.loads(durations_data)
-    with open('{file_to_save}', 'w') as f:
-        f.write(durations_data)
-
-def slow_first_load_durations():
-    if os.path.exists('{file_to_save}'):
-        with open('{file_to_save}', 'r') as f:
-            return f.read()
-```
-
 Contributing
 ------------
-Contributions are very welcome. Tests can be run with `tox`_, please ensure
+Contributions are very welcome. Tests can be run with `tox`, please ensure
 the coverage at least stays the same before you submit a pull request.
 
 License
 -------
 
-Distributed under the terms of the `MIT`_ license, "pytest-slow-first" is free and open source software
+Distributed under the terms of the `MIT` license, "pytest-slow-first" is free and open source software.
 
 
 Issues
 ------
 
-If you encounter any problems, please `file an issue`_ along with a detailed description.
-
-.. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
-.. _`@hackebrot`: https://github.com/hackebrot
-.. _`MIT`: http://opensource.org/licenses/MIT
-.. _`BSD-3`: http://opensource.org/licenses/BSD-3-Clause
-.. _`GNU GPL v3.0`: http://www.gnu.org/licenses/gpl-3.0.txt
-.. _`Apache Software License 2.0`: http://www.apache.org/licenses/LICENSE-2.0
-.. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
-.. _`file an issue`: https://github.com/joaovitorsilvestre/pytest-slow-first/issues
-.. _`pytest`: https://github.com/pytest-dev/pytest
-.. _`tox`: https://tox.readthedocs.io/en/latest/
-.. _`pip`: https://pypi.org/project/pip/
-.. _`PyPI`: https://pypi.org/project
+If you encounter any problems, please `file an issue` along with a detailed description.
