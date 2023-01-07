@@ -6,7 +6,7 @@ pytest-slow-first
 
 ## What it does?
 
-Allow to run your test suite with tests ordered by their duration on last successful run.
+Execute your test suite with tests ordered by their durations on last successful run.
 
 </br>
 </hr>
