@@ -6,12 +6,11 @@ pytest-slow-first
 
 ## What it does?
 
-Execute your test suite with tests ordered by their durations on last successful run.
-
+Sort tests by their duration on the last run. Making slow tests run first.
 </br>
 </hr>
 
-## How it can make your suite run faster?
+## How can it make your suite run faster?
 
 Before all, these benefits only appear when running this plugin alongside with [pytest-xdist](https://github.com/pytest-dev/pytest-xdist).
 
