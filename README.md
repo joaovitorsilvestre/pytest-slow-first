@@ -21,11 +21,11 @@ Allow to run the
 Features
 --------
 
-<img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="max-width: 70%;">
+<img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="width: 70% !important;">
 
-<img src="./docs/assets/only_xdist.png?raw=true" alt="Alt text" title="Optional title" style="max-width: 70%;">
+<img src="./docs/assets/only_xdist.png?raw=true" alt="Alt text" title="Optional title"  style="width: 70% !important;">
 
-<img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title" style="max-width: 70%;">
+<img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title"  style="width: 70% !important;">
 
 Requirements
 ------------
