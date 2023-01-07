@@ -28,7 +28,7 @@ The problem with this approath is that demanding tests very often will go to sam
 When this happens, the total time spend running your suit will be longer that necessary, because, as you can se in the above image,
 there are workers hanging without any more tests to run.
 
-This plugin will ensure that slowers tests run first and the total duration of the same suite will look like this:
+This plugin will ensure that slowers tests run first and are evenly distributed between workers. Now the execution of the same suite will look like this:
 
 <img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title"  style="width: 60% !important;">
 
