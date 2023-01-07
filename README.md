@@ -14,18 +14,28 @@ pytest-slow-first
     :target: https://ci.appveyor.com/project/joaovitorsilvestre/pytest-slow-first/branch/master
     :alt: See Build Status on AppVeyor
 
-Allow to run the
+## What it does?
 
-----
+Allow to run your test suite with tests ordered by their duration on last successful run.
 
-Features
---------
+## How it can make your suite run faster?
 
-<img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="width: 70% !important;">
+Before all, these benefits only appear when running this plugin alongside with [pytest-xdist](https://github.com/pytest-dev/pytest-xdist).
+
+Imagine a suit with 6 tests. Each one takes some amount of time to run. Ex:
+
+<img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="width: 60% !important;">
+
+By running this suite with Xdist with 2 workers, running tests at default order, the load of each worker will be like:
 
 <img src="./docs/assets/only_xdist.png?raw=true" alt="Alt text" title="Optional title"  style="width: 70% !important;">
 
-<img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title"  style="width: 70% !important;">
+The problem with this approath is that demanding tests very often will go to same worker.
+
+When this happens, the total time spend running your suit will be longer that necessary, because, as you can se in the above image,
+there are workers hanging without any more tests to run.
+
+<img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title"  style="width: 60% !important;">
 
 Requirements
 ------------
