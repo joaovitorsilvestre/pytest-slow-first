@@ -21,23 +21,13 @@ Allow to run the
 Features
 --------
 
-=========== TEST SUIT ============
-Test 1 | |==|
-Test 2 | |========|
-Test 3 | |======|
-Test 4 | |================|
-Test 5 | |======================|
-Test 6 | |====|
+![Alt text](./docs/assets/test_suite.png?raw=true "Title")
 
-=========== xdist ONLY (3 workers) ============
-WORKER 1 | |======================|
-WORKER 2 | |====||==|
-WORKER 3 | |========||======||================|
+![Alt text](./docs/assets/only_xdist.png?raw=true "Title")
 
-=========== xdist + slow-first ONLY (3 workers) ============
-WORKER 1 | |======================|
-WORKER 2 | |================||====|
-WORKER 3 | |========||======||==|
+![Alt text](./docs/assets/xdist_and_slow_first.pn?raw=true "Title")
+
+![plot](./docs/assets/xdist_and_slow_first.pn?raw=true)
 
 Requirements
 ------------
