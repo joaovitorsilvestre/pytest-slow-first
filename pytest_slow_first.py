@@ -30,9 +30,9 @@ def _get_slow_first_from_config(config):
 
 class Test:
     nodeid: str
-    setup_duration: float | None
-    call_duration: float | None
-    teardown_duration: float | None
+    setup_duration: Union[float, None]
+    call_duration: Union[float, None]
+    teardown_duration: Union[float, None]
 
     def __init__(self, nodeid: str, setup_duration: float = None, call_duration: float = None, teardown_duration: float = None):
         self.nodeid = nodeid
