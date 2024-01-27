@@ -126,7 +126,7 @@ def pytest_addoption(parser):
         action='store_true',
         dest='slow_first',
         default=False,
-        help='Sort tests from slowest to fastest.'
+        help='Enable pytest-slow-first plugin and prioritize running the slowest tests first.'
     )
 
 
