@@ -3,7 +3,7 @@ import importlib
 import json
 import logging
 import os
-from typing import Union
+from typing import Union, Dict
 
 import pytest
 from _pytest.config import ExitCode
@@ -47,7 +47,7 @@ class Test:
     def set_duration(self, kind: str, duration: float):
         setattr(self, f"{kind}_duration", duration)
 
-    def serialize(self) -> dict[str, Union[str, float]]:
+    def serialize(self) -> Dict[str, Union[str, float]]:
         return {'nodeid': self.nodeid, 'setup_duration': self.setup_duration,
                 'call_duration': self.call_duration, 'teardown_duration': self.teardown_duration}
 
@@ -57,10 +57,10 @@ class Test:
 
 
 class SlowFirst:
-    _tests_by_name: dict[str, Test]
+    _tests_by_name: Dict[str, Test]
     enabled: bool
 
-    def __init__(self, tests_by_name: dict[str, Test] = None, enabled: bool = False):
+    def __init__(self, tests_by_name: Dict[str, Test] = None, enabled: bool = False):
         self._tests_by_name = tests_by_name or {}
         self.enabled = enabled
 
