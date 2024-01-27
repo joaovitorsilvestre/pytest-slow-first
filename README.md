@@ -39,44 +39,6 @@ In the next time you run it, tests will be sorted by time spend in the last run,
 </br>
 </hr>
 
-Usage
------
-
-You just need to define two functions inside your conftest.py file: `slow_first_save_durations` and `slow_first_load_durations`.
-
-The first one is to save results of current run and the second one is to load the same results in the folowing run. Allowing this plugin to sort execuntion of tests based in these results.
-
-Example of `conftest.py` file:
-```python
-import os, json
-
-
-def slow_first_load_durations():
-    if os.path.exists('/tmp/tests_duration'):
-        with open('/tmp/tests_duration', 'r') as f:
-            return f.read()
-    else:
-        # Durations not found. Run with default order
-        return None
-
-def slow_first_save_durations(durations_data: str):
-    with open('/tmp/tests_duration', 'w') as f:
-        f.write(durations_data)
-```
-
-#### Explanation
-
-1. First, `slow_first_load_durations` will be called before your tests starts running, it will load the durantion of the tests
-of the previous run. 
-
-    * **obs**: if its the first time using this plugin or if you can't load the results, this function must return None.
-
-2. If `slow_first_load_durations` finds data, it returns the content and slow-first plugin will sort your tests, otherwise 
-the test suite will run at default order.
-
-3. If the suit runs with success, `slow_first_save_durations` is going to be called with durations as argument. This function must save the results
-in a way that `slow_first_load_durations` can load in the next run.
-
 ### Running with pytest-slow-first plugin
 Finally, activate the plugin by passing `--slow-first` as paramter of pytest command:
 
@@ -86,6 +48,10 @@ pytest tests --slow-first -n3  # using along side xdist
 
 </br>
 </hr>
+
+THis plugin will save the duration of each of your tests in a file named `pytest-slow-first.json` in the current directory.
+You can change the location by setting the enviroment variable `SLOW_FIRST_PATH` to the path you want.
+Ex: `export SLOW_FIRST_PATH=/tmp/pytest-slow-first.json pytest --slow-first`
 
 Installation
 ------------

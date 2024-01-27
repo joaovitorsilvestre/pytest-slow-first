@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from _pytest.config import ExitCode
 
 
@@ -18,22 +20,9 @@ def test_enabled_slow_first(testdir):
             sleep(0.2)
     """)
 
-    file_to_save = testdir.tmpdir.join('slow_first.json')
+    file_to_save = testdir.tmpdir.join('pytest-slow-first.json')
 
-    testdir.makeconftest(f"""
-        import os
-        import json
-    
-        def slow_first_save_durations(durations_data: str):
-            assert json.loads(durations_data)
-            with open('{file_to_save}', 'w') as f:
-                f.write(durations_data)
-        
-        def slow_first_load_durations():
-            if os.path.exists('{file_to_save}'):
-                with open('{file_to_save}', 'r') as f:
-                    return f.read()
-    """)
+    testdir.makeconftest("")
 
     # 1º theres no previous durention saved, the first run will run
     # tests in the order they are defined
@@ -76,16 +65,21 @@ def test_enabled_slow_first(testdir):
     assert result.ret == 0
 
 
-def test_validate_user_implemented_functions_in_conftest(testdir):
-    testdir.makepyfile("""
-        from time import sleep
+def test_different_format(testdir):
+    from pytest_slow_first import SlowFirst
 
+    testdir.makepyfile("""
         def test1():
-            pass
+            sleep(0.1)
     """)
+
+    file_oprevious_run = testdir.tmpdir.join('pytest-slow-first.json')
+    with open(f'{file_oprevious_run}', 'w') as f:
+        json.dump({"format_version": "0.0.1", "tests": []}, f)
 
     testdir.makeconftest("")
 
+    # 1º Must exit with error because the format version is not compatible
     result = testdir.runpytest('--slow-first', '-v')
 
-    assert result.ret == ExitCode.INTERNAL_ERROR
+    assert result.ret == ExitCode.USAGE_ERROR
