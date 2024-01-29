@@ -1,57 +1,50 @@
-pytest-slow-first
-=================
+# pytest-slow-first
 
-![Python versions](https://img.shields.io/pypi/v/pytest-slow-first.svg?raw=True)
-![Python versions](https://img.shields.io/pypi/pyversions/pytest-slow-first.svg?raw=True)
+[![PyPI Version](https://img.shields.io/pypi/v/pytest-slow-first.svg?raw=True)](https://pypi.org/project/pytest-slow-first/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/pytest-slow-first.svg?raw=True)](https://pypi.org/project/pytest-slow-first/)
 
-## What it does?
+## Overview
 
-Sort tests by their duration on the last run. Making slow tests run first.
-</br>
-</hr>
+`pytest-slow-first` is a pytest plugin that optimizes test suite execution by sorting tests based on their duration from the last run. This ensures that slower tests run first, leading to more efficient utilization of resources when used in conjunction with [pytest-xdist](https://github.com/pytest-dev/pytest-xdist).
 
-## How can it make your suite run faster?
+## How It Works
 
-Before all, these benefits only appear when running this plugin alongside with [pytest-xdist](https://github.com/pytest-dev/pytest-xdist).
+When running your test suite with this plugin, it saves the duration of each test in a file. On subsequent runs, tests are sorted based on the time they took to execute in the last run. This sorting minimizes the overall test suite execution time.
 
-Taking this into acount, now imagine a suite with 6 tests. Each one takes some amount of time to run. Ex:
+Running tests with `pytest-xdist` with multiple workers, evenly distributing slower tests among workers becomes crucial. Without this plugin, the default order may lead to inefficient resource utilization. `pytest-slow-first` addresses this issue by ensuring that slower tests are evenly distributed, reducing the total execution time.
 
-<img src="./docs/assets/test_suite.png?raw=true" alt="Alt text" title="Optional title" style="width: 60% !important;">
+### Example
 
-By running this suite with Xdist with 2 workers, tests at default order, the load of each worker would be like:
+Consider a test suite with six tests, each taking varying amounts of time to run:
+![Test Suite](https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/test_suite.png?raw=true)
 
-<img src="./docs/assets/only_xdist.png?raw=true" alt="Alt text" title="Optional title"  style="width: 70% !important;">
+Running this suite with two workers using only `pytest-xdist` might result in uneven distribution:
 
-The problem with this approath is that demanding tests very often will go to same worker.
+![Default xdist Distribution](https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/only_xdist.png?raw=true)
 
-When this happens, the total time spend running your suit will be longer that necessary, because, as you can se in the above image,
-there are workers hanging without any more tests to run.
+However, with `pytest-slow-first`, the same suite will be executed more efficiently and takes less time to finish, as shown below:
 
-This plugin will ensure that slowers tests run first and are evenly distributed between workers. Now the execution of the same suite will look like this:
+![xdist and slow-first Distribution](https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/xdist_and_slow_first.png?raw=true)
 
-<img src="./docs/assets/xdist_and_slow_first.png?raw=true" alt="Alt text" title="Optional title"  style="width: 60% !important;">
+## Usage
 
-### How it works?
-
-This plugin will save the duration of each of your tests in a file or wherever you want. 
-In the next time you run it, tests will be sorted by time spend in the last run, making your whole suite take less time to complete. 
-
-</br>
-</hr>
-
-### Running with pytest-slow-first plugin
-Finally, activate the plugin by passing `--slow-first` as paramter of pytest command:
+To use `pytest-slow-first` alongside `pytest-xdist`, simply add the `--slow-first` option:
 
 ```bash
 pytest tests --slow-first -n3  # using along side xdist
 ```
 
-</br>
-</hr>
+The plugin initializes by running your suite as usual the first time. On subsequent runs, it sorts tests based on the time taken in the previous run.
 
-THis plugin will save the duration of each of your tests in a file named `pytest-slow-first.json` in the current directory.
-You can change the location by setting the enviroment variable `SLOW_FIRST_PATH` to the path you want.
-Ex: `export SLOW_FIRST_PATH=/tmp/pytest-slow-first.json pytest --slow-first`
+### Multiple runs
+The plugin's results file is cumulative. If a test run already exists in the file, its duration will be updated.
+
+### Custom File Location
+By default, the plugin saves test durations in a file named pytest-slow-first.json in the current directory. You can change the location by setting the SLOW_FIRST_PATH environment variable:
+
+```bash
+export SLOW_FIRST_PATH=/tmp/pytest-slow-first.json pytest --slow-first
+```
 
 Installation
 ------------
