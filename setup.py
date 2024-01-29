@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-slow-first',
-    version='1.0.0',
+    version='1.0.2',
     author='João Vitor Silvestre',
     author_email='joao_vitor_silvestre@outlook.com',
     maintainer='João Vitor Silvestre',
@@ -37,6 +37,9 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
