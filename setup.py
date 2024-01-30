@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-slow-first',
-    version='1.0.2',
+    version='1.0.3',
     author='João Vitor Silvestre',
     author_email='joao_vitor_silvestre@outlook.com',
     maintainer='João Vitor Silvestre',
