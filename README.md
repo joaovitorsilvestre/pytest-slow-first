@@ -16,15 +16,15 @@ Running tests with `pytest-xdist` with multiple workers, evenly distributing slo
 ### Example
 
 Consider a test suite with six tests, each taking varying amounts of time to run:
-![Test Suite](https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/test_suite.png?raw=true)
+<img src="https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/test_suite.png?raw=true" alt="Suite with 6 tests and their times" title="Example of test suite" style="width: 60% !important;">
 
 Running this suite with two workers using only `pytest-xdist` might result in uneven distribution:
 
-![Default xdist Distribution](https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/only_xdist.png?raw=true)
+<img src="https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/only_xdist.png?raw=true" alt="Suite running with xdist" title="Only xdist" style="width: 70% !important;">
 
 However, with `pytest-slow-first`, the same suite will be executed more efficiently and takes less time to finish, as shown below:
 
-![xdist and slow-first Distribution](https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/xdist_and_slow_first.png?raw=true)
+<img src="https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/xdist_and_slow_first.png?raw=true" alt="Suite with 6 tests running with xdist + slow-first" title="Xdist + slow-first" style="width: 60% !important;">
 
 ## Usage
 
