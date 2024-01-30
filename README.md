@@ -20,10 +20,9 @@ Consider a test suite with six tests, each taking varying amounts of time to run
 
 Running this suite with two workers using only `pytest-xdist` might result in uneven distribution:
 
-<img src="https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/only_xdist.png?raw=true" alt="Suite running with xdist" title="Only xdist" style="width: 60% !important;">
+<img src="https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/only_xdist.png?raw=true" alt="Suite running with xdist" title="Only xdist" style="width: 70% !important;">
 
 However, with `pytest-slow-first`, the same suite will be executed more efficiently and takes less time to finish, as shown below:
-
 
 <img src="https://github.com/joaovitorsilvestre/pytest-slow-first/blob/master/docs/assets/xdist_and_slow_first.png?raw=true" alt="Suite with 6 tests running with xdist + slow-first" title="Xdist + slow-first" style="width: 60% !important;">
 
